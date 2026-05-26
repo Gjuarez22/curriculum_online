@@ -43,7 +43,7 @@
           <!-- Foto -->
           <div class="flex justify-center mb-6 mt-4 md:mt-0">
             <img
-              src="https://via.placeholder.com/150"
+              src="/img/perfil.jpeg"
               alt="Gerardo Juárez"
               class="w-32 h-40 md:w-40 md:h-48 object-cover border-4 border-white dark:border-slate-700 shadow-md dark:shadow-lg rounded-sm transition-colors"
             />
@@ -127,7 +127,7 @@
           </section>
 
           <!-- Cursos -->
-          <section>
+          <section class="mb-8">
             <h2
               class="text-lg font-bold border-b-2 border-[#2c3e50] dark:border-blue-500/50 mb-4 pb-1 uppercase tracking-wider dark:text-slate-100"
             >
@@ -138,6 +138,19 @@
               <li>Habilidades Blandas - empleaTECH</li>
               <li>Introducción a Linux Red Hat</li>
               <li>Seguridad Informática - ESET</li>
+            </ul>
+          </section>
+
+          <!-- Referencias -->
+          <section>
+            <h2
+              class="text-lg font-bold border-b-2 border-[#2c3e50] dark:border-blue-500/50 mb-4 pb-1 uppercase tracking-wider dark:text-slate-100"
+            >
+              Referencias
+            </h2>
+            <ul class="list-disc list-inside text-xs space-y-2 text-gray-700 dark:text-slate-400">
+              <li>Ingenierio Kevin Espinoza (+503) 6305 - 9075</li>
+              <li>Ricardo Cerna +(503) 7174 - 7976</li>
             </ul>
           </section>
         </aside>
@@ -271,7 +284,7 @@
               class="text-xl font-bold text-[#1e293b] dark:text-slate-100 border-b border-gray-300 dark:border-slate-700 mb-5 pb-2 tracking-widest uppercase flex items-center transition-colors"
             >
               <span class="bg-[#1e293b] dark:bg-blue-500 w-2 h-6 mr-3 rounded-sm"></span>
-              Tecnologías
+              Tecnologías y herramientas
             </h2>
             <div class="flex flex-wrap gap-2.5">
               <span
@@ -301,19 +314,19 @@ const toggleTheme = () => {
 }
 
 const skills = [
-  'React.js',
+  'JAVA Spring Boot',
   'Angular',
   'Vue.js',
+  'React.js',
   'Nest.js',
   'Symfony',
-  'PHP',
-  'Spring Boot',
   'ASP.NET Core/Framework',
-  'Javascript',
-  'GIT',
+ 
   'PostgreSQL',
   'SQL Server',
-  'MySQL',
+  'MySQL', 
+  
+  'GIT',
   'Tailwind CSS',
   'Postman',
 ]
