@@ -302,7 +302,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts"> 
 import { ref } from 'vue'
 
 // Estado reactivo para controlar el modo oscuro (por defecto lo iniciamos en false / modo claro)
