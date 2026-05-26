@@ -182,9 +182,9 @@
               <span class="bg-[#1e293b] dark:bg-blue-500 w-2 h-6 mr-3 rounded-sm"></span> Perfil
             </h2>
             <p class="text-gray-700 dark:text-slate-400 leading-relaxed text-sm text-justify">
-              Desarrollador de Software enfocado en crear sistemas escalables, diseñar flujos de
-              trabajo eficientes y optimizar el rendimiento mediante buenas prácticas. Combino
-              experiencia técnica en backend y frontend con una mentalidad orientada a resultados.
+              Desarrollador de Software enfocado en crear sistemas escalables, 
+              diseñar flujos de trabajo eficientes y optimizar el rendimiento mediante buenas prácticas.
+               Combino experiencia técnica en backend y frontend con una mentalidad orientada a resultados y el aprendizaje continuo.
             </p>
           </section>
 
