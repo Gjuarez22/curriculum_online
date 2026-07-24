@@ -1,3 +1,18 @@
-import PocketBase from 'pocketbase';
+import PocketBase from 'pocketbase'
+import { keys } from '../envs/api-keys'
+import type { datosPersonalesModel, idiomasModel } from '@/models/models'
 
-const pb = new PocketBase('http://127.0.0.1:8090');
+export class pocketBaseService {
+  private static readonly pb = new PocketBase(keys.url)
+
+  static async getDatosPersonales(): Promise<datosPersonalesModel> {
+    return await this.pb.collection('cv_datospersonales').getOne(keys.persona_id)
+  }
+
+  static async getIdiomas(): Promise<idiomasModel[]> {
+    return await this.pb.collection('cv_idiomas').getFullList({
+      // Nota las comillas dobles "" envolviendo el valor de la variable
+      filter: `persona_id="${keys.persona_id}"`,
+    })
+  }
+}

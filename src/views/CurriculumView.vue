@@ -24,15 +24,16 @@
           class="md:hidden bg-[#1e293b] dark:bg-slate-950 text-white p-6 text-center border-b border-transparent dark:border-slate-800"
         >
           <h1 class="text-2xl font-light tracking-widest uppercase">
-            Gerardo Daniel <br />
-            <span class="font-bold text-[#94a3b8] dark:text-blue-400 transition-colors"
-              >Juárez Pérez</span
-            >
+            {{ datosPersonales?.nombres }}
+            <br />
+            <span class="font-bold text-[#94a3b8] dark:text-blue-400 transition-colors">{{
+              datosPersonales?.apellidos
+            }}</span>
           </h1>
           <p
             class="mt-3 text-xs tracking-[0.15em] border-t border-gray-500 dark:border-slate-700 pt-2 inline-block text-gray-300 dark:text-slate-400"
           >
-            INGENIERO EN DESARROLLO DE SOFTWARE
+            {{ datosPersonales?.carrera }}
           </p>
         </header>
 
@@ -58,13 +59,13 @@
             </h2>
             <ul class="space-y-3 text-sm text-gray-700 dark:text-slate-400">
               <li class="flex items-center">
-                <span class="mr-3 text-lg">📍</span> Tonacatepeque, San Salvador
+                <span class="mr-3 text-lg">📍</span> {{ datosPersonales?.direccion }}
               </li>
               <li class="flex items-center">
-                <span class="mr-3 text-lg">📞</span> (503) 7290-6464
+                <span class="mr-3 text-lg">📞</span> {{ datosPersonales?.telefono }}
               </li>
               <li class="flex items-center">
-                <span class="mr-3 text-lg">✉️</span> gerardo.juarez118@outlook.com
+                <span class="mr-3 text-lg">✉️</span> {{ datosPersonales?.correo }}
               </li>
               <li class="flex items-center">
                 <span class="mr-3 text-lg">📅</span> 15 de Julio, 2001
@@ -182,9 +183,10 @@
               <span class="bg-[#1e293b] dark:bg-blue-500 w-2 h-6 mr-3 rounded-sm"></span> Perfil
             </h2>
             <p class="text-gray-700 dark:text-slate-400 leading-relaxed text-sm text-justify">
-              Desarrollador de Software enfocado en crear sistemas escalables, 
-              diseñar flujos de trabajo eficientes y optimizar el rendimiento mediante buenas prácticas.
-               Combino experiencia técnica en backend y frontend con una mentalidad orientada a resultados y el aprendizaje continuo.
+              Desarrollador de Software enfocado en crear sistemas escalables, diseñar flujos de
+              trabajo eficientes y optimizar el rendimiento mediante buenas prácticas. Combino
+              experiencia técnica en backend y frontend con una mentalidad orientada a resultados y
+              el aprendizaje continuo.
             </p>
           </section>
 
@@ -302,11 +304,21 @@
   </div>
 </template>
 
-<script setup lang="ts"> 
-import { ref } from 'vue'
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { pocketBaseService } from '../services/pocketbaseService'
+import type { datosPersonalesModel, idiomasModel } from '@/models/models'
+onMounted(async () => {
+  datosPersonales.value = await pocketBaseService.getDatosPersonales()
+  idiomas.value = await pocketBaseService.getIdiomas()
+
+  console.log(idiomas.value)
+})
 
 // Estado reactivo para controlar el modo oscuro (por defecto lo iniciamos en false / modo claro)
 const isDarkMode = ref(false)
+const datosPersonales = ref<datosPersonalesModel>()
+const idiomas = ref<idiomasModel[]>()
 
 // Función que invierte el valor al hacer click en el botón
 const toggleTheme = () => {
@@ -321,11 +333,11 @@ const skills = [
   'Nest.js',
   'Symfony',
   'ASP.NET Core/Framework',
- 
+
   'PostgreSQL',
   'SQL Server',
-  'MySQL', 
-  
+  'MySQL',
+
   'GIT',
   'Tailwind CSS',
   'Postman',
