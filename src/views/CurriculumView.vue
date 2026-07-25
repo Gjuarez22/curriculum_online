@@ -80,17 +80,14 @@
             >
               Educación
             </h2>
-            <div class="mb-5">
-              <p class="font-bold text-sm dark:text-slate-200">Universidad Francisco Gavidia</p>
-              <p class="italic text-xs text-gray-600 dark:text-blue-400/80 mb-1">2020 - 2025</p>
-              <p class="text-sm text-gray-700 dark:text-slate-400">
-                Ingeniería en Desarrollo de Software
+            <div v-for="edu in educacion" class="mb-5">
+              <p class="font-bold text-sm dark:text-slate-200">{{ edu.institucion }}</p>
+              <p class="italic text-xs text-gray-600 dark:text-blue-400/80 mb-1">
+                {{ edu.desde }} - {{ edu.hasta }}
               </p>
-            </div>
-            <div>
-              <p class="font-bold text-sm dark:text-slate-200">ITEXSAL</p>
-              <p class="italic text-xs text-gray-600 dark:text-blue-400/80 mb-1">2017 - 2018</p>
-              <p class="text-sm text-gray-700 dark:text-slate-400">Bachillerato en Computación</p>
+              <p class="text-sm text-gray-700 dark:text-slate-400">
+                {{ edu.carrera }}
+              </p>
             </div>
           </section>
 
@@ -101,27 +98,30 @@
             >
               Idiomas
             </h2>
-            <div class="space-y-2 text-sm text-gray-700 dark:text-slate-400">
-              <p class="dark:text-slate-200 font-semibold mb-2">Inglés:</p>
+            <div v-for="id in idiomas" class="space-y-2 text-sm text-gray-700 dark:text-slate-400">
+              <p class="dark:text-slate-200 font-semibold mb-2">{{ id.idioma }}</p>
               <p class="flex justify-between items-center">
                 Lectura
                 <span
-                  class="bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 px-2 py-0.5 rounded text-xs"
-                  >Intermedio</span
+                  class="px-2 py-0.5 rounded text-xs"
+                  :class="obtenerClaseNivel(id.nivel_lectura)"
+                  >{{ nivelPalabra(id.nivel_lectura) }}</span
                 >
               </p>
               <p class="flex justify-between items-center">
                 Escritura
                 <span
-                  class="bg-gray-200 text-gray-700 dark:bg-slate-800 dark:text-slate-400 px-2 py-0.5 rounded text-xs border border-transparent dark:border-slate-700"
-                  >Básico</span
+                  class="px-2 py-0.5 rounded text-xs border border-transparent"
+                  :class="obtenerClaseNivel(id.nivel_escritura)"
+                  >{{ nivelPalabra(id.nivel_escritura) }}</span
                 >
               </p>
               <p class="flex justify-between items-center">
                 Habla
                 <span
-                  class="bg-gray-200 text-gray-700 dark:bg-slate-800 dark:text-slate-400 px-2 py-0.5 rounded text-xs border border-transparent dark:border-slate-700"
-                  >Básico</span
+                  class="px-2 py-0.5 rounded text-xs border border-transparent"
+                  :class="obtenerClaseNivel(id.nivel_habla)"
+                  >{{ nivelPalabra(id.nivel_habla) }}</span
                 >
               </p>
             </div>
@@ -135,10 +135,12 @@
               Cursos
             </h2>
             <ul class="list-disc list-inside text-xs space-y-2 text-gray-700 dark:text-slate-400">
-              <li>Azure Fundamentals DP900</li>
-              <li>Habilidades Blandas - empleaTECH</li>
-              <li>Introducción a Linux Red Hat</li>
-              <li>Seguridad Informática - ESET</li>
+              <li v-for="cu in cursos">
+                {{ cu.nombre }}
+                <span v-if="cu.institucion != undefined && cu.institucion.length > 0"
+                  >- {{ cu.institucion }}
+                </span>
+              </li>
             </ul>
           </section>
 
@@ -150,8 +152,9 @@
               Referencias
             </h2>
             <ul class="list-disc list-inside text-xs space-y-2 text-gray-700 dark:text-slate-400">
-              <li>Ingenierio Kevin Espinoza (+503) 6305 - 9075</li>
-              <li>Ricardo Cerna +(503) 7174 - 7976</li>
+              <li v-for="ref in referencias">
+                {{ ref.nombres + ' ' + ref.apellidos }} {{ ref.telefono }}
+              </li>
             </ul>
           </section>
         </aside>
@@ -163,15 +166,15 @@
             class="hidden md:block bg-[#1e293b] dark:bg-slate-950 text-white p-8 -m-8 mb-8 border-b border-transparent dark:border-slate-800 transition-colors"
           >
             <h1 class="text-4xl font-light tracking-widest uppercase">
-              Gerardo Daniel <br />
-              <span class="font-bold text-[#94a3b8] dark:text-blue-400 transition-colors"
-                >Juárez Pérez</span
-              >
+              {{ datosPersonales?.nombres }} <br />
+              <span class="font-bold text-[#94a3b8] dark:text-blue-400 transition-colors">{{
+                datosPersonales?.apellidos
+              }}</span>
             </h1>
             <p
               class="mt-4 text-sm tracking-[0.2em] border-t border-gray-500 dark:border-slate-700 pt-3 inline-block text-gray-300 dark:text-slate-400"
             >
-              INGENIERO EN DESARROLLO DE SOFTWARE
+              {{ datosPersonales?.carrera }}
             </p>
           </header>
 
@@ -183,10 +186,7 @@
               <span class="bg-[#1e293b] dark:bg-blue-500 w-2 h-6 mr-3 rounded-sm"></span> Perfil
             </h2>
             <p class="text-gray-700 dark:text-slate-400 leading-relaxed text-sm text-justify">
-              Desarrollador de Software enfocado en crear sistemas escalables, diseñar flujos de
-              trabajo eficientes y optimizar el rendimiento mediante buenas prácticas. Combino
-              experiencia técnica en backend y frontend con una mentalidad orientada a resultados y
-              el aprendizaje continuo.
+              {{ datosPersonales?.descripcion_perfil }}
             </p>
           </section>
 
@@ -201,80 +201,29 @@
 
             <div class="space-y-8">
               <!-- Puesto 1 -->
-              <div class="relative pl-4 border-l-2 border-gray-300 dark:border-slate-700">
+              <div
+                v-for="exp in experiencias"
+                class="relative pl-4 border-l-2 border-gray-300 dark:border-slate-700"
+              >
                 <div
-                  class="absolute w-3 h-3 bg-blue-600 dark:bg-blue-500 rounded-full -left-[7px] top-1.5 ring-4 ring-white dark:ring-slate-900 transition-colors"
+                  class="absolute w-3 h-3 bg-blue-600 dark:bg-blue-500 rounded-full -left-1.75 top-1.5 ring-4 ring-white dark:ring-slate-900 transition-colors"
                 ></div>
                 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
                   <h3 class="font-bold text-lg text-gray-900 dark:text-slate-200">
-                    Desarrollador de Software
+                    {{ exp.cargo }}
                   </h3>
                   <span
                     class="text-xs font-semibold text-blue-700 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/20 px-2 py-1 rounded mt-1 sm:mt-0"
-                    >2025 - Presente</span
+                    >{{ exp.desde }} - {{ exp.hasta }}</span
                   >
                 </div>
                 <p class="text-[#1e293b] dark:text-blue-300 font-medium text-sm mb-2">
-                  Sistec Group
+                  {{ exp.institucion }}
                 </p>
                 <ul
                   class="list-disc list-inside text-sm text-gray-700 dark:text-slate-400 space-y-1.5 marker:text-gray-400 dark:marker:text-slate-600"
                 >
-                  <li>Análisis y definición de requerimientos.</li>
-                  <li>Gestión de área IT y despliegue de aplicaciones.</li>
-                  <li>Desarrollo y mantenimiento de software.</li>
-                </ul>
-              </div>
-
-              <!-- Puesto 2 -->
-              <div class="relative pl-4 border-l-2 border-gray-300 dark:border-slate-700">
-                <div
-                  class="absolute w-3 h-3 bg-gray-400 dark:bg-slate-600 rounded-full -left-[7px] top-1.5 ring-4 ring-white dark:ring-slate-900 transition-colors"
-                ></div>
-                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
-                  <h3 class="font-bold text-lg text-gray-900 dark:text-slate-200">
-                    Analista Programador
-                  </h3>
-                  <span
-                    class="text-xs font-semibold text-gray-600 dark:text-slate-400 bg-gray-200 dark:bg-slate-800 px-2 py-1 rounded mt-1 sm:mt-0"
-                    >2024 - 2025</span
-                  >
-                </div>
-                <p class="text-[#1e293b] dark:text-blue-300 font-medium text-sm mb-2">
-                  Defensoría del Consumidor
-                </p>
-                <ul
-                  class="list-disc list-inside text-sm text-gray-700 dark:text-slate-400 space-y-1.5 marker:text-gray-400 dark:marker:text-slate-600"
-                >
-                  <li>Desarrollo de aplicaciones con ASP.NET framework.</li>
-                  <li>Análisis y desarrollo de módulos internos.</li>
-                  <li>Desarrollo de bases de datos con SQL Server.</li>
-                </ul>
-              </div>
-
-              <!-- Puesto 3 -->
-              <div class="relative pl-4 border-l-2 border-transparent">
-                <div
-                  class="absolute w-3 h-3 bg-gray-400 dark:bg-slate-600 rounded-full -left-[7px] top-1.5 ring-4 ring-white dark:ring-slate-900 transition-colors"
-                ></div>
-                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
-                  <h3 class="font-bold text-lg text-gray-900 dark:text-slate-200">
-                    Analista y Desarrollador Web
-                  </h3>
-                  <span
-                    class="text-xs font-semibold text-gray-600 dark:text-slate-400 bg-gray-200 dark:bg-slate-800 px-2 py-1 rounded mt-1 sm:mt-0"
-                    >2022 - 2024</span
-                  >
-                </div>
-                <p class="text-[#1e293b] dark:text-blue-300 font-medium text-sm mb-2">
-                  CRB-Autoparts
-                </p>
-                <ul
-                  class="list-disc list-inside text-sm text-gray-700 dark:text-slate-400 space-y-1.5 marker:text-gray-400 dark:marker:text-slate-600"
-                >
-                  <li>Desarrollo de aplicaciones web con Symfony.</li>
-                  <li>Desarrollo de APIs RESTful y microservicios.</li>
-                  <li>Implementación de facturación electrónica.</li>
+                  <li v-for="t in exp.tareas">{{ t.descripcion }}</li>
                 </ul>
               </div>
             </div>
@@ -290,11 +239,11 @@
             </h2>
             <div class="flex flex-wrap gap-2.5">
               <span
-                v-for="tech in skills"
-                :key="tech"
+                v-for="tech in herramientas"
+                :key="tech.nombre"
                 class="bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-slate-300 px-3 py-1.5 rounded-md text-xs font-semibold border border-gray-200 dark:border-slate-700 hover:border-[#1e293b] dark:hover:border-blue-500/50 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors cursor-default shadow-sm"
               >
-                {{ tech }}
+                {{ tech.nombre }}
               </span>
             </div>
           </section>
@@ -307,41 +256,64 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { pocketBaseService } from '../services/pocketbaseService'
-import type { datosPersonalesModel, idiomasModel } from '@/models/models'
+import type {
+  cursoModel,
+  datosPersonalesModel,
+  educacionModel,
+  experienciaModel,
+  herramientaModel,
+  idiomasModel,
+  referenciaModel,
+} from '@/models/models'
 onMounted(async () => {
   datosPersonales.value = await pocketBaseService.getDatosPersonales()
   idiomas.value = await pocketBaseService.getIdiomas()
-
-  console.log(idiomas.value)
+  experiencias.value = await pocketBaseService.getExperiencias()
+  educacion.value = await pocketBaseService.getEducacion()
+  cursos.value = await pocketBaseService.getCursos()
+  referencias.value = await pocketBaseService.getReferencias()
+  herramientas.value = await pocketBaseService.getHerramientas()
 })
 
 // Estado reactivo para controlar el modo oscuro (por defecto lo iniciamos en false / modo claro)
 const isDarkMode = ref(false)
 const datosPersonales = ref<datosPersonalesModel>()
 const idiomas = ref<idiomasModel[]>()
+const educacion = ref<educacionModel[]>()
+const cursos = ref<cursoModel[]>()
+const referencias = ref<referenciaModel[]>()
+const experiencias = ref<experienciaModel[]>()
+const herramientas = ref<herramientaModel[]>()
 
 // Función que invierte el valor al hacer click en el botón
 const toggleTheme = () => {
   isDarkMode.value = !isDarkMode.value
 }
 
-const skills = [
-  'JAVA Spring Boot',
-  'Angular',
-  'Vue.js',
-  'React.js',
-  'Nest.js',
-  'Symfony',
-  'ASP.NET Core/Framework',
+const obtenerClaseNivel = (nivel: number) => {
+  if (nivel < 5) {
+    return 'bg-gray-200 text-gray-700 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700'
+  }
 
-  'PostgreSQL',
-  'SQL Server',
-  'MySQL',
+  if (nivel >= 5 && nivel <= 7) {
+    return 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300'
+  }
 
-  'GIT',
-  'Tailwind CSS',
-  'Postman',
-]
+  if (nivel > 7) {
+    return 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300'
+  }
+}
+const nivelPalabra = (nivel: number) => {
+  if (nivel < 5) {
+    return 'Básico'
+  }
+  if (nivel >= 5 && nivel <= 7) {
+    return 'Intermedio'
+  }
+  if (nivel > 7) {
+    return 'Avanzado'
+  }
+}
 </script>
 
 <style scoped>
